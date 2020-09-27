@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "TaskTwo";
+}
+
+<h1>Zad SQL 2</h1>
+<hr />
+<div class="accordion">
+	<text class="text-muted">T-SQL</text>
+	<textarea class="codePreview" readonly>
+DECLARE @@currDate DATE;
+DECLARE @@endDate DATE;
+DECLARE @@result TABLE(date DATE);
+
+SET @@currDate = DATEFROMPARTS(2020, 01, 01);
+SET @@endDate = DATEFROMPARTS(2021, 01, 01);
+
+WHILE @@currDate != @@endDate
+BEGIN
+	INSERT INTO @@result VALUES ( @@currDate);
+	SET @@currDate = DATEADD(DAY, 1, @@currDate);
+END;
+SELECT * FROM @@result;
+    </textarea>
+</div>
+

@@ -1,0 +1,72 @@
+﻿@model Gabos_recruitmentTest_web_app.Models.CSharpTaskTwoViewModel
+@{
+    ViewData["Title"] = "TaskTwo";
+}
+
+<h1>Zadanie C# 2</h1>
+
+<div class="accordion">
+	<hr />
+	<div class="container">
+		@using (Html.BeginForm("TaskTwo", "CSharpTest", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "" }))
+		{
+			@Html.AntiForgeryToken()
+			<div class="form-group">
+				@Html.LabelFor(model => model.searchParameters, htmlAttributes: new { @class = "control-label col-md-2", @for = "searchParameters" })
+				<p class="text-muted">należy oddzielać przecinkiem</p>
+				@Html.EditorFor(model => model.searchParameters, new { htmlAttributes = new { @class = "form-control" } })
+			</div>
+			<button type="submit" class="btn btn-primary">Wyświetl podmioty</button>
+			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		}
+
+		@if(Model.gusResponse != null)
+		{
+			<hr />
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Regon</th>
+						<th scope="col">Nip</th>
+						<th scope="col">Status Nip</th>
+						<th scope="col">Nazwa</th>
+						<th scope="col">Województwo</th>
+						<th scope="col">Powiat</th>
+						<th scope="col">Gmina</th>
+						<th scope="col">Miejscowość</th>
+						<th scope="col">Kod Pocztowy</th>
+						<th scope="col">Ulica</th>
+						<th scope="col">Nr Nieruchomości</th>
+						<th scope="col">Nr Lokalu</th>
+						<th scope="col">Typ</th>
+						<th scope="col">Silos ID</th>
+						<th scope="col">Data Zakończenia Działalności</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (Gabos_recruitmentTest_web_app.Models.EconomicEntity item in Model.gusResponse)
+					{
+						<tr>
+							<td>@item.REGON</td>
+							<td>@item.NIP</td>
+							<td>@item.NIPstatus</td>
+							<td>@item.Name</td>
+							<td>@item.Province</td>
+							<td>@item.District</td>
+							<td>@item.Commune</td>
+							<td>@item.City</td>
+							<td>@item.PostCode</td>
+							<td>@item.Street</td>
+							<td>@item.RealEstateNum</td>
+							<td>@item.ApartmentNum</td>
+							<td>@item.Type</td>
+							<td>@item.SilosId</td>
+							<td>@item.EconomicActivityEnd</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		}
+	</div>
+
+</div>

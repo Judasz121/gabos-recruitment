@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "TaskOne";
+}
+
+<h1>Zadanie SQL 1</h1>
+<hr />
+<div class="accordion">
+	<text class="text-muted">T-SQL</text>
+	<textarea class="codePreview" readonly>
+CREATE TRIGGER after_Faktury_insert
+ON Faktury
+AFTER INSERT AS
+BEGIN
+		DECLARE @@currId INT;
+		DECLARE @@klientId INT;
+		DECLARE @@fakturaId char(64);
+		DECLARE @@rowsCount INT;
+		DECLARE @@i INT;
+
+		SET @@rowsCount = (SELECT COUNT(*) FROM Faktury WHERE nrfaktury IS NULL);
+		SET @@i = 0;
+		WHILE @@rowsCount > @@i
+		BEGIN
+			SET @@currId = (SELECT TOP(1) id FROM Faktury WHERE nrfaktury IS NULL ORDER BY id ASC);
+			SET @@klientId = (SELECT nrklienta FROM Faktury WHERE id = @@currId);
+			SET @@fakturaId = CONCAT(CONVERT(varchar, @@klientId), '\', CONVERT(varchar, (SELECT COUNT(*)+1 FROM Faktury WHERE nrklienta = @@klientId AND nrfaktury IS NOT NULL)));
+
+			UPDATE Faktury SET nrfaktury = @@fakturaId WHERE id = @@currId;
+			SET @@i = @@i + 1;
+		END;
+END;
+    </textarea>
+</div>

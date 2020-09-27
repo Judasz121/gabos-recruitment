@@ -1,0 +1,107 @@
+﻿@model  Gabos_recruitmentTest_web_app.Models.CSharpTaskOneViewModel
+@{
+    ViewData["Title"] = "TaskOne";
+}
+
+<h1>Zadanie C# 1</h1>
+
+<div class="accordion">
+	<hr />
+	<h5>pobierzOswiadczenie:</h5>
+	<textarea class="codePreview" readonly>@Model.zusResponse</textarea>
+
+	<hr/>
+	<h5>algorytm wyznaczania daty podziału zwolnień lekarskich</h5>
+	<p class="text-muted"> znajduje się w ~\Controllers\CSharpTestController.cs, w funkcji CalcZLAdates</p>
+
+	<div class="container">
+		<div class="row">
+			<div style="margin-right: 50px;">
+				<h5>Dane wejściowe</h5>
+				@using (Html.BeginForm("TaskOne", "CSharpTest", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "ZLAdocInput"}))
+				{
+					@Html.AntiForgeryToken()
+					<div class="form-group">
+						<label for="dateIssued">Data wystawienia</label>
+						@Html.EditorFor(model => model.dateIssued, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+						@Html.ValidationMessageFor(model => model.dateIssued, "", new { @class = "text-danger" })
+					</div>
+					<div class="form-group">
+						<label for="inabilityToWorkFrom">Niezdolność do pracy od</label>
+						@Html.EditorFor(model => model.inabilityToWorkFromDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+						@Html.ValidationMessageFor(model => model.inabilityToWorkFromDate, "", new { @class = "text-danger" })
+					</div>
+					<div class="form-group">
+						<label for="inabilityToWorkTo">Niezdolność do pracy do</label>
+						@Html.EditorFor(model => model.inabilityToWorkToDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+						@Html.ValidationMessageFor(model => model.inabilityToWorkToDate, "", new { @class = "text-danger" })
+					</div>
+					<div class="form-group">
+						<label for="inHospitalFrom">Pobyt w szpitalu od</label>
+						@Html.EditorFor(model => model.inHospitalFromDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+						@Html.ValidationMessageFor(model => model.inHospitalFromDate, "", new { @class = "text-danger" })
+					</div>
+					<div class="form-group">
+						<label for="inHospitalTo">Pobyt w szpitalu do</label>
+						@Html.EditorFor(model => model.inHospitalToDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+						@Html.ValidationMessageFor(model => model.inHospitalToDate, "", new { @class = "text-danger" })
+					</div>
+					<button type="submit" class="btn btn-primary">Oblicz</button>
+					@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+				}
+			</div>
+			<div >
+				<h5>Dane wyjściowe</h5>
+				<div class="container">
+
+					@if (Model.ZLAdocs != null)
+						@foreach (var item in Model.ZLAdocs)
+						{
+							<table class="ZLAdoc">
+								<tbody>
+									<tr>
+										<td class="name">@Html.DisplayNameFor(model => item.inabilityToWorkFrom)</td>
+										<td class="value">@Html.DisplayFor(model => item.inabilityToWorkFrom)</td>
+									</tr>
+									<tr>
+										<td class="name">@Html.DisplayNameFor(model => item.inabilityToWorkTo)</td>
+										<td class="value">@Html.DisplayFor(model => item.inabilityToWorkTo)</td>
+									</tr>
+									<tr>
+										<td class="name">@Html.DisplayNameFor(model => item.inHospitalFrom)</td>
+										<td class="value">@Html.DisplayFor(model => item.inHospitalFrom)</td>
+									</tr>
+									<tr>
+										<td class="name">@Html.DisplayNameFor(model => item.inHospitalTo)</td>
+										<td class="value">@Html.DisplayFor(model => item.inHospitalTo)</td>
+									</tr>
+									<tr>
+										<td class="name">@Html.DisplayNameFor(model => item.typeOfDoc)</td>
+										<td class="value">@Html.DisplayFor(model => item.typeOfDoc)</td>
+									</tr>
+								</tbody>
+							</table>
+
+							@*<div class="row">
+								<div class="col">
+									@Html.DisplayNameFor(model => item.inabilityToWorkFrom)<br />
+									@Html.DisplayNameFor(model => item.inabilityToWorkTo)<br />
+									@Html.DisplayNameFor(model => item.inHospitalFrom)<br />
+									@Html.DisplayNameFor(model => item.inHospitalTo)<br />
+									@Html.DisplayNameFor(model => item.typeOfDoc)<br />
+								</div>
+								<div class="col">
+									@Html.DisplayFor(model => item.inabilityToWorkFrom)<br />
+									@Html.DisplayFor(model => item.inabilityToWorkTo)<br />
+									@Html.DisplayFor(model => item.inHospitalFrom)<br />
+									@Html.DisplayFor(model => item.inHospitalTo)<br />
+									@Html.DisplayFor(model => item.typeOfDoc)<br />
+								</div>
+							</div>*@
+							<br />
+						}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
